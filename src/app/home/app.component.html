@@ -1,0 +1,45 @@
+<div class="panel-primary" style="color:black;height:100%;"></div>
+
+<div style="display:flex;flex-direction:row;background-color:black;">
+
+  <div style="text-align:center;width:300px;display:flex;flex-direction: column;padding-right:100px;"><br><Br>
+    <div class="menu"><a (click)="menuFlag=true;isFilterClicked!=isFilterClicked" id='home' [routerLink]="['/Home']">Home</a>
+    </div>
+    <br>
+
+    <div class="menu"><a (click)="menuFlag=false" id='add' [routerLink]="['/Add']">Add</a></div>
+    <div><br>
+      <div [hidden]="!menuFlag">
+        <div class="menu"><a (click)="isFilterClicked = !isFilterClicked">FilterBy</a></div>
+        <br><br>
+        <div [hidden]='!isFilterClicked'>
+          <select (change)="filterValue($event)">
+            <option value="default" value="-- None --">-- None --</option>
+            <option [(ngValue)]="options" *ngFor="let  c of options;let  i  = index;">{{c}}</option>
+          </select>
+          <br><br><input (input)="transfer($event) " [(ngModel)]="selectedFilter" [hidden]="!flag"
+                         style="text-align:center;" placeholder="...your content..." type="text"></div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <router-outlet></router-outlet>
+  </div>
+
+</div>
+
+
+
+<script src="https://www.gstatic.com/firebasejs/5.2.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyAjcsD-zdyUl_j6-qvNfjtkMVRP7h_l55o",
+    authDomain: "angularbookslibrary.firebaseapp.com",
+    databaseURL: "https://angularbookslibrary.firebaseio.com",
+    projectId: "angularbookslibrary",
+    storageBucket: "angularbookslibrary.appspot.com",
+    messagingSenderId: "888571783522"
+  };
+  firebase.initializeApp(config);
+</script>

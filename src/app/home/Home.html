@@ -1,0 +1,63 @@
+<br><br>
+
+<div class="album py-5 bg-light">
+  <div class="container" style="min-height:1000px;background-color:#f2f2f2;z-index:6;">
+    <div class="row">
+      <br><br>
+      <div class="col-md-4" *ngFor='let j of filters() | Filterit : filterCriteria:category ;let i = index; '>
+        <div class="card mb-4 box-shadow"
+             style=" border-radius:4px;border: 1px solid rgba(0,0,0,.125);background-color:white;"><br>
+          <div style="text-align:center;" class="card-header"><b>{{j.title.substring(0,1)| uppercase}}{{j.title.substring(1) | lowercase}}</b></div>
+          <br>
+          <img class="card-img-top"
+               style="height: 300px; width: 100%; display: block;border-top:1px solid;border-bottom:1px solid;"
+               [src]="j.website" onError="this.src='assets/imgErr.png'">
+          <br>
+          <div class="card-body">
+            <div><b><label>Isbn: &nbsp;</label></b> <span>{{j.isbn}}<br></span></div>
+            <div><b><label>Subtitle:&nbsp;</label></b> <span (click)="setNum(i)">{{j.subtitle.length>20 ? ( j.subtitle | slice:0:20):j.subtitle}}<span
+              class="readMore" [hidden]="indexed==i || j.subtitle.length<20">...</span></span><span
+              [hidden]="indexed!=i">{{j.subtitle | slice:20:j.subtitle.length}}</span><br></div>
+
+            <div><b><label> Author:&nbsp;</label></b> <span>{{j.author.substring(0,1)| uppercase}}{{j.author.substring(1) | lowercase}}<br></span></div>
+            <div><b><label>Published:&nbsp; </label></b> <span>{{j.published}}<br></span></div>
+            <div><b><label>Publisher:&nbsp;</label></b><span> {{j.publisher.substring(0,1)| uppercase}}{{j.publisher.substring(1) | lowercase}}<br></span></div>
+            <div><b><label>Pages:&nbsp;</label> </b><span>{{j.pages}}<br></span></div>
+            <div><b><label>Description:</label> </b><span>{{j.description}}</span></div>
+
+
+          </div>
+          <div style="padding:10px;">
+            <div><b><label>Rating:</label></b>
+              <span *ngIf="isRatingOn&& i ==currentIndex ;then Rate; else unRate"></span>
+              <ng-template #Rate>
+                <star-component (starRating)='RatingClicked($event)' [currentBook]="i"></star-component>
+              </ng-template>
+              <ng-template #unRate>
+                <span [ngClass]="getClass(1,i )"></span>
+                <span [ngClass]="getClass(2,i )"></span>
+                <span [ngClass]="getClass(3,i )"></span>
+                <span [ngClass]="getClass(4,i )"></span>
+                <span [ngClass]="getClass(5,i )"></span>
+
+              </ng-template>
+
+            </div>
+            <div  class="btn-group" style="margin-left:70%;">
+              <button
+                [routerLink]="['/editPage',j.website,j.isbn,j.title,j.subtitle,j.author,j.published,j.publisher,j.pages,j.description]"
+                class="btn btn-sm btn-outline-secondary" >Edit
+              </button>
+              <button id="rate" class="btn btn-sm btn-outline-secondary" (click)="ratingClicked(i)" style="margin-left:5px;">Rate</button>
+            </div>
+          </div>
+
+
+        </div>
+        <br><br>
+      </div>
+    </div>
+  </div>
+
+</div>
+
